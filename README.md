@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Quik Start:
+# Quik Start:
 
 ## Step 1:
 ### `npm install`
@@ -17,13 +17,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-## Step 1:
 
 ### `npm install`
 
 Installs the node packages.
 
-## Step 2:
 
 ### `npm start`
 
