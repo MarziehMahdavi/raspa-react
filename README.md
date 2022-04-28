@@ -2,14 +2,25 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+###Quik Start:
+
+## Step 1:
+### `npm install`
+
+## Step 2:
+### `npm start`
+
 ## Available Scripts
 
 In the project directory, you can run:
 
+## Step 1:
 
 ### `npm install`
 
-Install the node packages
+Installs the node packages.
+
+## Step 2:
 
 ### `npm start`
 
