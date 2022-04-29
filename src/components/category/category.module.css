@@ -1,0 +1,116 @@
+/*******   navbar   ********/
+.nav-top-bar {
+    background-color: #eae4df;
+    font-size: 0.85rem;
+}
+.nav-top-bar a{
+    color: #4b4b4b;
+    padding: 0 5px 0 5px;
+}
+.nav-top-bar a:hover{
+    color: #e35640;
+}
+.logo-img {
+    width: 60px;
+    height: fit-content;
+}
+.logo-title {
+    text-align: right;
+    color: black;
+}
+.logo-description {
+    text-align: right;
+    color: #e35640;
+    font-size: 0.9rem;
+}
+.dir-rtl {
+    direction: rtl !important;
+}
+.search-input {
+    background-color: transparent;
+    border: 0;
+    border-bottom: 1px solid black;
+    padding: 5px 10px;
+    font-size: 0.9em;
+}
+.search-btn {
+    border: 0;
+    border-radius: 100%;
+    background-color: #e35640;
+    color: white;
+    width: 34px;
+    height: 34px;
+    font-size: 0.93rem;
+}
+.nav-middle-bar {
+    border-bottom: 1px solid #e4e9ee;
+}
+.navbar-menu a{
+    color: #4b4b4b;
+}
+.navbar-menu a:hover{
+    color: #e35640;
+}
+.navbar-menu .active a {
+    color: #e35640;
+}
+.mobile-navbar-toggler svg{
+    width: 35px;
+}
+
+
+
+/******** page content ********/
+
+/* Desktop Categories Menu */
+.categories-container {
+    height: 100vh;
+}
+.category-item a {
+    color: #4b4b4b;
+    font-size: 0.9em;
+}
+.category-item a.nav-item-menu{
+    font-size: 0.8em;
+
+}
+.category-item a.active {
+    color: #e35640;
+}
+
+/* Foods List */
+.list-container {
+    height: 100vh;
+    overflow-y: auto;
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.list-container::-webkit-scrollbar {
+    display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.list-container {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+.list-container .card {
+    border: 0;
+}
+.food-img {
+    width: 100%;
+    height: auto;
+}
+.food-title {
+    color: #4b4b4b;
+    text-align: right;
+}
+.food-category {
+    color: #e35640;
+    font-size: 0.8rem;
+    text-align: right;
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.food-likes {
+    color: #4b4b4b;
+}

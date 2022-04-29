@@ -1,0 +1,32 @@
+
+.food-title {
+    font-weight: bolder;
+    color: #4b4b4b;
+    text-align: right;
+}
+.food-img {
+    width: 100%;
+    height: auto;
+}
+.food-likes {
+    color: #4b4b4b;
+}
+.food-category {
+    color: #e35640;
+    border-right: 1px solid #dbdbdb;
+}
+.ingredients-title {
+    color: #e35640;
+    text-align: right;
+    direction: rtl;
+}
+.ingredients-table {
+    direction: rtl;
+    text-align: right;
+}
+.instructions-para {
+    font-size: 0.9rem;
+    direction: rtl;
+    text-align: right;
+    line-height: 2rem;
+}
