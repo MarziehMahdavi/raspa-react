@@ -50,7 +50,11 @@ export default function Navbar() {
                         <a className="nav-link pr-0" href="#">صفحه اصلی</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">دسته‌بندی</a>
+                        <Link className="nav-link"
+                              to={{
+                                  pathname: "/category",
+                                  hash: "#appetizer",
+                              }}>دسته‌بندی</Link>
                         <div className={Style["category-drop-container"]} data-uk-drop="pos: bottom-right;">
                             <div className="uk-card  uk-card-default">
                                 <ul className="nav flex-column px-0">
