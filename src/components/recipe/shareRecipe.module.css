@@ -1,0 +1,35 @@
+.formContainer label {
+    display: block;
+    text-align: right;
+    margin-top: 40px;
+    font-size: 1.1rem;
+}
+
+.formContainer input {
+    text-align: right;
+    border: 1px solid #fc8f59;
+    width: 100%;
+    padding: 8px 20px;
+    border-radius: 6px;
+}
+
+.formContainer select {
+    text-align: right;
+    border: 1px solid #fc8f59;
+    width: 100%;
+    padding: 8px 20px;
+    border-radius: 6px;
+}
+
+.uploadBtn {
+    float: right;
+    background-color: #e35640;
+    color: white;
+}
+.addIngredients  {
+    float: right;
+    background-color: #e35640;
+    color: white;
+    width: 46px;
+    height: 46px;
+}

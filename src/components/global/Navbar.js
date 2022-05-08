@@ -47,7 +47,7 @@ export default function Navbar() {
             <div className="nav">
                 <ul className={" nav ml-auto dir-rtl pr-0 py-2 " + Style["navbar-menu"]}>
                     <li className="nav-item active ">
-                        <a className="nav-link pr-0" href="#">صفحه اصلی</a>
+                        <Link className="nav-link pr-0" to={"/"}>صفحه اصلی</Link>
                     </li>
                     <li className="nav-item">
                         <Link className="nav-link"
@@ -106,7 +106,7 @@ export default function Navbar() {
                         </div>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">ارسال دستور پخت</a>
+                        <Link className="nav-link" to={"share-recipe"}>ارسال دستور پخت</Link>
                     </li>
                     <li className="nav-item">
                         <a className="nav-link" href="#">درباره ما</a>

@@ -151,7 +151,7 @@ export default function Category() {
                                 <Link className="nav-link text-center nav-item-menu" to="/">صفحه اصلی</Link>
                             </li>
                             <li className={"nav-item " + Style["category-item"]}>
-                                <a className="nav-link text-center nav-item-menu" href="#">ارسال دستور پخت</a>
+                                <Link className="nav-link text-center nav-item-menu" to={"/share-recipe"}>ارسال دستور پخت</Link>
                             </li>
                             <li className={"nav-item " + Style["category-item"]}>
                                 <a className="nav-link text-center nav-item-menu" href="#">درباره ما</a>
