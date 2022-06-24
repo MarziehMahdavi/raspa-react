@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import * as Style from "./category.module.css";
 
@@ -13,33 +13,89 @@ import Latest4 from "../../assets/samples/latest4.jpg";
 import Latest5 from "../../assets/samples/latest5.jpg";
 import {Link, useLocation} from "react-router-dom";
 import * as $ from 'jquery';
+import {generateURL} from "../../requests";
 
 export default function Category() {
+    const [categories, setCateories] = useState([]);
+    const [categoryId, setCateoryId] = useState("categories/all");
+    const [recipes, setRecipes] = useState([]);
 
     const onHashChanged = (value) => {
         const activeStyle = "color: #e35640"
         const hash = window.location.hash;
-        console.log(value)
+        let category_id;
         if(value != null ){
             $(".menu-container a").attr("style","");
             $(value).attr("style",activeStyle);
+            category_id = "category/"+value.substring(1);
         }
         else {
             if(hash !== "" && hash !== "#") {
                 $(".menu-container a").attr("style","");
                 $(hash).attr("style",activeStyle);
+
+                category_id = "category/"+hash.substring(1);
             }
             else {
                 $(".menu-container a").attr("style","");
                 $("#appetizer").attr("style",activeStyle);
+                category_id = "all"
             }
         }
+
+
+        /* get recipes by category */
+        let axios = require('axios');
+        let config_categories = {
+            method: 'get',
+            url: generateURL("/recipes/" + category_id),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        };
+        console.log(config_categories)
+
+        axios(config_categories)
+            .then(function (response) {
+                let recipe_array = [];
+                $(response.data).each(function (index, item) {
+                    recipe_array.push(item);
+                });
+                setRecipes(recipe_array);
+                console.log(response)
+
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
     }
+
+    useEffect(function (){}, [categoryId])
 
     useEffect(function (){
         onHashChanged();
 
-    }, [])
+        let axios = require('axios');
+        let config_categories = {
+            method: 'get',
+            url: generateURL("/categories/all") ,
+        };
+        axios(config_categories)
+            .then(function (response) {
+                let category_array = [];
+                $(response.data).each(function (index, item) {
+                    category_array.push(item);
+                });
+                setCateories(category_array);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+
+
+    }, []);
     return(
         <div>
 
@@ -104,48 +160,19 @@ export default function Category() {
 
                         {/*<!-- Menu -->*/}
                         <ul className="nav flex-column pt-4 menu-container" >
-                            <li className={"nav-item " + Style["category-item"]}>
-                                <Link id="appetizer" className={"nav-link text-center " } onClick={()=> {onHashChanged("#appetizer")}}
-                                      to={{
-                                          pathname: "/category",
-                                          hash: "#appetizer",
-                                      }} > پیش غذا</Link>
-                            </li>
-                            <li className={"nav-item " + Style["category-item"]}>
-                                <Link id="persian" className="nav-link text-center " onClick={()=> {onHashChanged("#persian")}}
-                                      to={{
-                                          pathname: "/category",
-                                          hash: "#persian",
-                                      }}>غذای ایرانی</Link>
-                            </li>
-                            <li className={"nav-item " + Style["category-item"]}>
-                                <Link id="fastfood" className="nav-link text-center " onClick={()=> {onHashChanged("#fastfood")}}
-                                      to={{
-                                          pathname: "/category",
-                                          hash: "#fastfood",
-                                      }}>فست فود</Link>
-                            </li>
-                            <li className={"nav-item " + Style["category-item"]}>
-                                <Link id="spices" className="nav-link text-center " onClick={()=> {onHashChanged("#spices")}}
-                                      to={{
-                                          pathname: "/category",
-                                          hash: "#spices",
-                                      }}>چاشنی و ادویه</Link>
-                            </li>
-                            <li className={"nav-item " + Style["category-item"]}>
-                                <Link id="desserts" className="nav-link text-center " onClick={()=> {onHashChanged("#desserts")}}
-                                      to={{
-                                          pathname: "/category",
-                                          hash: "#desserts",
-                                      }}>دسر و شیرینی</Link>
-                            </li>
-                            <li className={"nav-item " + Style["category-item"]}>
-                                <Link id="international" className="nav-link text-center " onClick={()=> {}}
-                                      to={{
-                                          pathname: "/category",
-                                          hash: "#international",
-                                      }}>غذای ملل</Link>
-                            </li>
+                            {
+                                categories.map((item)=> (
+                                    <li className={"nav-item " + Style["category-item"]}>
+                                        <Link id={item.id} className={"nav-link text-center " } onClick={()=> {
+                                            onHashChanged("#" + item.id)
+                                        }}
+                                              to={{
+                                                  pathname: "/category",
+                                                  hash: "#" + item.id,
+                                              }} >{item.description}</Link>
+                                    </li>
+                                ))
+                            }
 
                             <li className={"nav-item mt-5 " + Style["category-item"]}>
                                 <Link className="nav-link text-center nav-item-menu" to="/">صفحه اصلی</Link>
