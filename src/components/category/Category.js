@@ -20,6 +20,19 @@ export default function Category() {
     const [categoryId, setCateoryId] = useState("categories/all");
     const [recipes, setRecipes] = useState([]);
 
+    const findCategoryById = (id) => {
+        let name ;
+
+        categories.map((item) => {
+            if (item.id === id ) {
+                name = item.description;
+                return;
+            }
+        })
+
+        return name;
+    }
+
     const onHashChanged = (value) => {
         const activeStyle = "color: #e35640"
         const hash = window.location.hash;
@@ -57,11 +70,11 @@ export default function Category() {
 
         axios(config_categories)
             .then(function (response) {
-                let recipe_array = [];
-                $(response.data).each(function (index, item) {
-                    recipe_array.push(item);
-                });
-                setRecipes(recipe_array);
+                // let recipe_array = [];
+                // $(response.data).each(function (index, item) {
+                //     recipe_array.push(item);
+                // });
+                setRecipes(response.data);
                 console.log(response)
 
             })
@@ -69,6 +82,28 @@ export default function Category() {
                 console.log(error);
             });
 
+    }
+
+    const allRecipes = () => {
+        let axios = require('axios');
+        let config_categories = {
+            method: 'get',
+            url: generateURL("/recipes/all"),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        };
+        console.log(config_categories)
+
+        axios(config_categories)
+            .then(function (response) {
+                setRecipes(response.data);
+                console.log(response)
+
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     useEffect(function (){}, [categoryId])
@@ -160,6 +195,12 @@ export default function Category() {
 
                         {/*<!-- Menu -->*/}
                         <ul className="nav flex-column pt-4 menu-container" >
+                            <li className={"nav-item " + Style["category-item"]}>
+                                <Link to={{
+                                    pathname: "/category",
+                                }}
+                                    className={"nav-link text-center " } onClick={allRecipes}>همه دستورها</Link>
+                            </li>
                             {
                                 categories.map((item)=> (
                                     <li className={"nav-item " + Style["category-item"]}>
@@ -191,217 +232,31 @@ export default function Category() {
                     </div>
                     <div className={"col-12 col-xl-9 pt-3 " + Style["list-container"]}>
                         <div className="card-columns">
-                            <div className="card p-2">
-                                <img className={Style["food-img"]} src={Latest1}/>
-                                <p className={Style["food-category"] +" mt-2"}>فست فود</p>
-                                <Link to="/recipe">
-                                    <h6 className={Style["food-title"] +" mt-2"}>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
-                                        چاپ و با استفاده از طراحان </h6>
-                                </Link>
-                                <hr/>
-                                <div className={"d-flex " + Style["food-likes"]}>
-                                    <div>
-                                        <span>12k</span>
-                                        <span data-uk-icon="icon: heart"></span>
+                            {
+                                recipes.map((item, index) => (
+                                    <div className="card p-2">
+                                        <img className={Style["food-img"]} src={item.image !== null ? item.image : Latest1}/>
+                                        <p className={Style["food-category"] +" mt-2"}>{item.categories!== null && findCategoryById(item.categories[0])}</p>
+                                        <Link to={{
+                                            pathname: "/recipe",
+                                            search: "id=" + item.id
+                                        }}>
+                                            <h6 className={Style["food-title"] +" mt-2"}>{item.description}</h6>
+                                        </Link>
+                                        <hr/>
+                                        <div className={"d-flex " + Style["food-likes"]}>
+                                            <div>
+                                                <span>12k</span>
+                                                <span data-uk-icon="icon: heart"></span>
+                                            </div>
+                                            <div className="mr-3">
+                                                <span>{item.difficulty}</span>
+                                                <span data-uk-icon="icon: happy"></span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="mr-3">
-                                        <span>متوسط</span>
-                                        <span data-uk-icon="icon: happy"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="card p-2">
-                                <img className={Style["food-img"]} src={Latest3}/>
-                                <p className={Style["food-category"] +" mt-2"}>فست فود</p>
-                                <Link to="/recipe">
-                                    <h6 className={Style["food-title"] +" mt-2"}>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
-                                        چاپ و با استفاده از طراحان </h6>
-                                </Link>
-                                <hr/>
-                                <div className={"d-flex " + Style["food-likes"]}>
-                                    <div>
-                                        <span>12k</span>
-                                        <span data-uk-icon="icon: heart"></span>
-                                    </div>
-                                    <div className="mr-3">
-                                        <span>متوسط</span>
-                                        <span data-uk-icon="icon: happy"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="card p-2">
-                                <img className={Style["food-img"]} src={Latest2}/>
-                                <p className={Style["food-category"] +" mt-2"}>فست فود</p>
-                                <Link to="/recipe">
-                                    <h6 className={Style["food-title"] +" mt-2"}>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
-                                        چاپ و با استفاده از طراحان </h6>
-                                </Link>
-                                <hr/>
-                                <div className={"d-flex " + Style["food-likes"]}>
-                                    <div>
-                                        <span>12k</span>
-                                        <span data-uk-icon="icon: heart"></span>
-                                    </div>
-                                    <div className="mr-3">
-                                        <span>متوسط</span>
-                                        <span data-uk-icon="icon: happy"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="card p-2">
-                                <img className={Style["food-img"]} src={Latest5}/>
-                                <p className={Style["food-category"] +" mt-2"}>فست فود</p>
-                                <Link to="/recipe">
-                                    <h6 className={Style["food-title"] +" mt-2"}>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
-                                        چاپ و با استفاده از طراحان </h6>
-                                </Link>
-                                <hr/>
-                                <div className={"d-flex " + Style["food-likes"]}>
-                                    <div>
-                                        <span>12k</span>
-                                        <span data-uk-icon="icon: heart"></span>
-                                    </div>
-                                    <div className="mr-3">
-                                        <span>متوسط</span>
-                                        <span data-uk-icon="icon: happy"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="card p-2">
-                                <img className={Style["food-img"]} src={Latest4}/>
-                                <p className={Style["food-category"] +" mt-2"}>فست فود</p>
-                                <Link to="/recipe">
-                                    <h6 className={Style["food-title"] +" mt-2"}>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
-                                        چاپ و با استفاده از طراحان </h6>
-                                </Link>
-                                <hr/>
-                                <div className={"d-flex " + Style["food-likes"]}>
-                                    <div>
-                                        <span>12k</span>
-                                        <span data-uk-icon="icon: heart"></span>
-                                    </div>
-                                    <div className="mr-3">
-                                        <span>متوسط</span>
-                                        <span data-uk-icon="icon: happy"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="card p-2">
-                                <img className={Style["food-img"]} src={Latest4}/>
-                                <p className={Style["food-category"] +" mt-2"}>فست فود</p>
-                                <Link to="/recipe">
-                                    <h6 className={Style["food-title"] +" mt-2"}>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
-                                        چاپ و با استفاده از طراحان </h6>
-                                </Link>
-                                <hr/>
-                                <div className={"d-flex " + Style["food-likes"]}>
-                                    <div>
-                                        <span>12k</span>
-                                        <span data-uk-icon="icon: heart"></span>
-                                    </div>
-                                    <div className="mr-3">
-                                        <span>متوسط</span>
-                                        <span data-uk-icon="icon: happy"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="card p-2">
-                                <img className={Style["food-img"]} src={Latest1}/>
-                                <p className={Style["food-category"] +" mt-2"}>فست فود</p>
-                                <Link to="/recipe">
-                                    <h6 className={Style["food-title"] +" mt-2"}>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
-                                        چاپ و با استفاده از طراحان </h6>
-                                </Link>
-                                <hr/>
-                                <div className={"d-flex " + Style["food-likes"]}>
-                                    <div>
-                                        <span>12k</span>
-                                        <span data-uk-icon="icon: heart"></span>
-                                    </div>
-                                    <div className="mr-3">
-                                        <span>متوسط</span>
-                                        <span data-uk-icon="icon: happy"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="card p-2">
-                                <img className={Style["food-img"]} src={Latest2}/>
-                                <p className={Style["food-category"] +" mt-2"}>فست فود</p>
-                                <Link to="/recipe">
-                                    <h6 className={Style["food-title"] +" mt-2"}>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
-                                        چاپ و با استفاده از طراحان </h6>
-                                </Link>
-                                <hr/>
-                                <div className={"d-flex " + Style["food-likes"]}>
-                                    <div>
-                                        <span>12k</span>
-                                        <span data-uk-icon="icon: heart"></span>
-                                    </div>
-                                    <div className="mr-3">
-                                        <span>متوسط</span>
-                                        <span data-uk-icon="icon: happy"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="card p-2">
-                                <img className={Style["food-img"]} src={Latest3}/>
-                                <p className={Style["food-category"] +" mt-2"}>فست فود</p>
-                                <Link to="/recipe">
-                                    <h6 className={Style["food-title"] +" mt-2"}>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
-                                        چاپ و با استفاده از طراحان </h6>
-                                </Link>
-                                <hr/>
-                                <div className={"d-flex " + Style["food-likes"]}>
-                                    <div>
-                                        <span>12k</span>
-                                        <span data-uk-icon="icon: heart"></span>
-                                    </div>
-                                    <div className="mr-3">
-                                        <span>متوسط</span>
-                                        <span data-uk-icon="icon: happy"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="card p-2">
-                                <img className={Style["food-img"]} src={Latest5}/>
-                                <p className={Style["food-category"] +" mt-2"}>فست فود</p>
-                                <Link to="/recipe">
-                                    <h6 className={Style["food-title"] +" mt-2"}>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
-                                        چاپ و با استفاده از طراحان </h6>
-                                </Link>
-                                <hr/>
-                                <div className={"d-flex " + Style["food-likes"]}>
-                                    <div>
-                                        <span>12k</span>
-                                        <span data-uk-icon="icon: heart"></span>
-                                    </div>
-                                    <div className="mr-3">
-                                        <span>متوسط</span>
-                                        <span data-uk-icon="icon: happy"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="card p-2">
-                                <img className={Style["food-img"]} src={Latest4}/>
-                                <p className={Style["food-category"] +" mt-2"}>فست فود</p>
-                                <Link to="/recipe">
-                                    <h6 className={Style["food-title"] +" mt-2"}>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
-                                        چاپ و با استفاده از طراحان </h6>
-                                </Link>
-                                <hr/>
-                                <div className={"d-flex " + Style["food-likes"]}>
-                                    <div>
-                                        <span>12k</span>
-                                        <span data-uk-icon="icon: heart"></span>
-                                    </div>
-                                    <div className="mr-3">
-                                        <span>متوسط</span>
-                                        <span data-uk-icon="icon: happy"></span>
-                                    </div>
-                                </div>
-                            </div>
-
-
+                                ))
+                            }
 
                         </div>
 

@@ -61,9 +61,7 @@ export default function ShareRecipe() {
             "cookTime": parseInt($("#cook_time_input").val()),
             "servings": parseInt($("#servings_input").val()),
             "source": "string",
-            "image": [
-                $("#image_input").val()
-            ],
+            "image": $("#image_input").val(),
             "directions": direction,
             "ingredientCommands": ingredient_array,
             "difficulty": $("#difficulty_input").val(),
@@ -74,7 +72,7 @@ export default function ShareRecipe() {
         console.log(data)
         let config = {
             method: 'post',
-            url: generateURL("/ingredients/save"),
+            url: generateURL("/recipes/new"),
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -202,7 +200,7 @@ export default function ShareRecipe() {
                     <label>درجه سختی غذا:</label>
                     <select id={"difficulty_input"}>
                         <option value={"EASY"}>آسان</option>
-                        <option value={"MEDIUM"}>متوسط</option>
+                        <option value={"MODERATE"}>متوسط</option>
                         <option value={"HARD"}>سخت</option>
                     </select>
                 </div>

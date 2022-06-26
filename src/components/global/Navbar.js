@@ -1,10 +1,31 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import * as Style from './navbar.module.css';
 import Logo from "../../assets/images/chef.png"
 import {Link} from "react-router-dom";
+import {generateURL} from "../../requests";
+import * as $ from "jquery";
 
 
 export default function Navbar() {
+    const [categories, setCategories] = useState([])
+
+    useEffect(function (){
+
+        let axios = require('axios');
+        let config_categories = {
+            method: 'get',
+            url: generateURL("/categories/all") ,
+        };
+        axios(config_categories)
+            .then(function (response) {
+                setCategories(response.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+
+    }, []);
     return (
         <div>
 
@@ -53,53 +74,22 @@ export default function Navbar() {
                         <Link className="nav-link"
                               to={{
                                   pathname: "/category",
-                                  hash: "#appetizer",
+                                  // hash: "#appetizer",
                               }}>دسته‌بندی</Link>
                         <div className={Style["category-drop-container"]} data-uk-drop="pos: bottom-right;">
                             <div className="uk-card  uk-card-default">
                                 <ul className="nav flex-column px-0">
-                                    <li className="nav-item ">
-                                        <Link className={"nav-link text-center "}
-                                              to={{
-                                                  pathname: "/category",
-                                                  hash: "#appetizer",
-                                              }}>پیش غذا</Link>
-                                    </li>
-                                    <li className="nav-item ">
-                                        <Link className="nav-link text-center "
-                                              to={{
-                                                  pathname: "/category",
-                                                  hash: "#persian",
-                                              }}>غذای ایرانی</Link>
-                                    </li>
-                                    <li className="nav-item ">
-                                        <Link className="nav-link text-center "
-                                              to={{
-                                                  pathname: "/category",
-                                                  hash: "#fastfood",
-                                              }}>فست فود</Link>
-                                    </li>
-                                    <li className="nav-item ">
-                                        <Link className="nav-link text-center "
-                                              to={{
-                                                  pathname: "/category",
-                                                  hash: "#spices",
-                                              }}>چاشنی و ادویه</Link>
-                                    </li>
-                                    <li className="nav-item ">
-                                        <Link className="nav-link text-center "
-                                              to={{
-                                                  pathname: "/category",
-                                                  hash: "#desserts",
-                                              }}>دسر و شیرینی</Link>
-                                    </li>
-                                    <li className="nav-item ">
-                                        <Link className="nav-link text-center "
-                                              to={{
-                                                  pathname: "/category",
-                                                  hash: "#international",
-                                              }}>غذای ملل</Link>
-                                    </li>
+                                    {
+                                        categories.map((item) => (
+                                            <li className="nav-item ">
+                                                <Link className={"nav-link text-center "}
+                                                      to={{
+                                                          pathname: "/category",
+                                                          hash: "#" + item.id,
+                                                      }}>{item.description}</Link>
+                                            </li>
+                                        ))
+                                    }
                                 </ul>
 
                             </div>
